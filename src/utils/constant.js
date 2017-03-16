@@ -1,3 +1,11 @@
+/*
+* @Author: dlidala
+* @Github: https://github.com/dlidala
+* @Date:   2017-03-16 16:28:47
+* @Last Modified by:   dlidala
+* @Last Modified time: 2017-03-16 16:48:01
+*/
+
 // define env base constants
 // ex: publickKey, backendAPI
 

@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Add from './add'
 import List from './list'
 
+require('../../assets/sass/app.sass')
+
 Vue.use(VueRouter)
 
 // 创建一个路由器实例

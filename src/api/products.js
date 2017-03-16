@@ -1,3 +1,11 @@
+/*
+* @Author: dlidala
+* @Github: https://github.com/dlidala
+* @Date:   2017-03-16 16:27:59
+* @Last Modified by:   dlidala
+* @Last Modified time: 2017-03-16 16:47:34
+*/
+
 import { fetch, save } from '../utils/ajax'
 import { baseURL } from '../utils/constant'
 

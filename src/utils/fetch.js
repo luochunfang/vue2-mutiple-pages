@@ -1,3 +1,11 @@
+/*
+* @Author: dlidala
+* @Github: https://github.com/dlidala
+* @Date:   2017-03-16 16:28:54
+* @Last Modified by:   dlidala
+* @Last Modified time: 2017-03-16 16:48:18
+*/
+
 // ES6 fetch() API 没有timeout, 不能abort 暂时还不满足需求
 
 // project base custom `fetch()`

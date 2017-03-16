@@ -1,3 +1,11 @@
+/*
+* @Author: dlidala
+* @Github: https://github.com/dlidala
+* @Date:   2017-03-16 16:28:39
+* @Last Modified by:   dlidala
+* @Last Modified time: 2017-03-16 16:47:51
+*/
+
 // https://github.com/mzabriskie/axios
 import axios from 'axios'
 import _ from 'lodash'
