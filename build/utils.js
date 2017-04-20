@@ -7,9 +7,13 @@ exports.assetsPath = function (_path) {
   // default
   var assetsSubDirectory = config.dev.assetsSubDirectory
 
-  assetsSubDirectory = process.env.NODE_ENV === 'production'
-    ? config.build.assetsSubDirectory
-    : config.dev.assetsSubDirectory
+  if (process.env.NODE_ENV === 'production') {
+    assetsSubDirectory = config.build.assetsSubDirectory
+  }
+
+  if (process.env.NODE_ENV === 'staging') {
+    assetsSubDirectory = config.stg.assetsSubDirectory
+  }
 
   return path.posix.join(assetsSubDirectory, _path)
 }
@@ -82,14 +86,16 @@ exports.getEntry = function (globPath, fileType) {
       temp
 
   glob.sync(globPath).forEach(function (entry) {
+    temp = entry.split('/').splice(-3)
+    const basename = path.basename(entry, path.extname(entry))
+    const pathname = temp.splice(0, 1) + '\/' + temp.splice(0, 1) + '\/' + basename
+
     if (isHTML) {
-      temp = entry.split('/').splice(-3)
-      let pathname = temp.splice(0, 2).join('/')
       entries[pathname] = entry
     } else {
-      let basename = path.basename(entry, path.extname(entry))
-      temp = entry.split('/').splice(-3)
-      entries[basename] = entry
+      process.env.NODE_ENV === 'development'
+        ? entries[basename] = entry
+        : entries[pathname] = entry
     }
   })
 

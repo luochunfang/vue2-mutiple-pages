@@ -1,6 +1,5 @@
 require('./check-versions')()
 
-// process.env.NODE_ENV = 'production'
 process.env.NODE_ENV = process.argv[2] || 'production'
 
 var ora = require('ora')
@@ -9,7 +8,18 @@ var path = require('path')
 var chalk = require('chalk')
 var webpack = require('webpack')
 var config = require('../config')
+var utils = require('./utils')
 var webpackConfig = require('./webpack.prod.conf')
+
+console.log(webpackConfig)
+var project = process.argv[3]
+if (!project) {
+  console.log(`
+    ${chalk.yellow("Asshole!!! U don't provide any project for build...")}
+  `)
+
+  return
+}
 
 // use this same file to building `staging` or 'production' code
 var webpackConfig,
@@ -18,20 +28,21 @@ var webpackConfig,
 
 if (process.env.NODE_ENV === 'production') {
   webpackConfig = require('./webpack.prod.conf')
-  spinner = ora('building for production...')
-  assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
+  spinner = ora('building ' + chalk.yellow(project) + ' for production...')
+  assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory, project)
 }
 
 if (process.env.NODE_ENV === 'staging') {
   webpackConfig = require('./webpack.stg.conf')
-  spinner = ora('building for staging...')
-  assetsPath = path.join(config.stg.assetsRoot, config.stg.assetsSubDirectory)
+  spinner = ora('building ' + chalk.yellow(project) + ' for staging...')
+  assetsPath = path.join(config.stg.assetsRoot, config.stg.assetsSubDirectory, project)
 }
 
 spinner.start()
 
 rm(path.join(assetsPath), err => {
   if (err) throw err
+
   webpack(webpackConfig, function (err, stats) {
     spinner.stop()
     if (err) throw err

@@ -3,8 +3,32 @@ import VueRouter from 'vue-router'
 import Add from './add'
 import List from './list'
 
-require('../../assets/sass/app.sass')
+import $ from 'jquery'
+window.$ = $
 
+// require('../../assets/sass/app.sass')
+// import weui from '/static/lib/weui'
+
+// import { loading } from 'weui.js'
+import weui from 'weui.js'
+window.weui = weui
+
+import fetch from '../../utils/fetch'
+console.log(fetch)
+window.fetchs = fetch
+
+import posts from '../../api/posts'
+
+posts.getArticle().then(res => {
+  console.log(res)
+})
+
+posts.getPosts({data: {a: 'aaa'}}).then(res => {
+  console.log(res)
+})
+
+// console.log(weui)
+// weui.alert('test')
 Vue.use(VueRouter)
 
 // 创建一个路由器实例

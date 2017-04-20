@@ -1,40 +1,52 @@
-/*
-* @Author: dlidala
-* @Github: https://github.com/dlidala
-* @Date:   2017-03-16 16:28:54
-* @Last Modified by:   dlidala
-* @Last Modified time: 2017-03-16 16:48:18
-*/
+/* eslint-disable */
 
-// ES6 fetch() API 没有timeout, 不能abort 暂时还不满足需求
+require('./ajaxSettings')()
 
-// project base custom `fetch()`
-require('es6-promise').polyfill()
-var isomorphicFetch = require('isomorphic-fetch')
+import { Deferred, ajax } from 'jquery'
+import handleExceptions from './handleExceptions'
 
-export function fetch(url) {
+export default (url, options = {}) => {
 
-  // setp1: spinner.start()
-  // setp2: fetch data
-  // setp3: spinner.stop()
-  //    -- success (cb)
-  //    -- timeout (cb)
-  //    -- error   (cb)
+  // if not provide url
+  if (!url) {
+    console.error(
+      `URL Not Found!`
+    )
 
-  return isomorphicFetch(url, {
-    credentials: "same-origin",
-    timeout: 100
-  })
+    return
+  }
 
-}
+  let deferred = new Deferred()
+  let obj = {
+    url: url || '',
+    type: options.type || 'POST',
+    data: options.data || {},
+    dataType: options.dataType || 'json',
+    error: (xhr, statusText, errorThrown) => {
+      deferred.reject(xhr)
 
-export function save(url) {
-  return isomorphicFetch(url, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json"
+      console.error(`
+        Request: ${statusText} ==> Error Type: ${errorThrown}
+      `)
     },
-    credentials: "same-origin"
-  })
+    success: (data, textStatus, xhr) => {
+      // try to handle exceptions
+      try {
+        handleExceptions(data.resCode)
+      } catch (err) {
+        // console.log(err)
+      }
+
+      if (data.resCode !== '000000') {
+        deferred.reject(data)
+        return
+      }
+
+      deferred.resolve(data)
+    }
+  }
+
+  ajax(url, obj)
+
+  return deferred.promise()
 }

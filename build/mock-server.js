@@ -3,7 +3,7 @@
 * @Github: https://github.com/dlidala
 * @Date:   2017-03-09 14:16:07
 * @Last Modified by:   dlidala
-* @Last Modified time: 2017-03-16 09:49:16
+* @Last Modified time: 2017-04-18 12:39:24
 */
 'use strict';
 
@@ -19,10 +19,10 @@ var middlewares = jsonServer.defaults()
 server.use(middlewares)
 
 Object.keys(routes).map(name => {
-  // let json = path.resolve(__dirname, routes[name])
-  let json = path.resolve(__dirname, routes[name].data)
-  // server.use(name, (req, res) => {
-  server.use(routes[name].url, (req, res) => {
+  let json = path.resolve(__dirname, routes[name])
+  // let json = path.resolve(__dirname, routes[name].data)
+  server.use(name, (req, res) => {
+  // server.use(routes[name].url, (req, res) => {
     res.sendFile(json)
   })
 })

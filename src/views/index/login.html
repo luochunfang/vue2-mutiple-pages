@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/static/lib/css/weui.min.css">
+    <style>
+      body {
+        padding: 1em;
+      }
+
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="login" v-cloak>
+      {{ msg }}
+      <a href="javascript:;" class="weui-btn weui-btn_primary" @click="loadData">LOAD DATA</a>
+      <a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary">页面主操作 Disabled</a>
+      <a href="javascript:;" class="weui-btn weui-btn_default">页面次要操作 Normal</a>
+      <a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_default">页面次要操作 Disabled</a>
+      <a href="javascript:;" class="weui-btn weui-btn_warn">警告类操作 Normal</a>
+      <a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_warn">警告类操作 Disabled</a>
+    </div>
+  </body>
+</html>

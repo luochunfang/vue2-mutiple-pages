@@ -1,6 +1,6 @@
 # vue2-multiple-pages
 
-> 改造 `VUE-CLI` 构建多页应用
+> 改造 `VUE-CLI` 构建流程（构建多页应用）
 
 ## Build Setup
 
@@ -35,3 +35,40 @@ npm test
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+
+```
+static/
+assets/
+  js/
+  css/
+  img/
+  fonts/
+views/
+  index/
+  info/
+
+
+npm run build:prod:project
+static
+views/
+  index/
+    js/
+    css/
+    fonts/
+    imgs/
+    **.html
+
+  info/
+    js/
+    css/
+    fonts/
+    img/
+    **.html
+```
+
+```
+  zepto
+  bow
+  axios
+```

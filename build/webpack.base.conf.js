@@ -8,13 +8,35 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-var assetsPublicPath = config.dev.assetsPublicPath,
-    minify = {},
-    entries = utils.getEntry('./src/views/**/*.js'),
-    pages = utils.getEntry('./src/views/**/*.html', 'html')
+var project = process.argv[3]
+
+var minify = {}
+var entry = {}
+var projectPages = {}
+var tempPages
+var tempEntry
+
+var entries               = utils.getEntry('./src/views/**/*.js')
+var pages                 = utils.getEntry('./src/views/**/*.html', 'html')
+
+var cssPath               = utils.assetsPath('css/[name].[contenthash].css')
+var filename              = utils.assetsPath('js/[name].[chunkhash].js')
+var chunkFilename         = utils.assetsPath('js/[id].[chunkhash].js')
+var imgPath               = utils.assetsPath('img/[name].[hash:7].[ext]')
+var fontsPath             = utils.assetsPath('fonts/[name].[hash:7].[ext]')
+
+var assetsSubDirectory    = config.dev.assetsSubDirectory
+var staticSourceDirectory = config.dev.assetsSubDirectory
+var assetsPublicPath      = config.dev.assetsPublicPath
+var staticSourceDest      = config.dev.assetsSubDirectory
+var assetsRoot            = config.dev.assetsRoot
 
 if (process.env.NODE_ENV === 'production') {
-  assetsPublicPath = config.build.assetsPublicPath
+  assetsRoot              = config.build.assetsRoot
+  staticSourceDest        = config.build.assetsSubDirectory
+  assetsSubDirectory      = config.build.assetsSubDirectory
+  staticSourceDirectory   = config.build.staticSourceDirectory
+  assetsPublicPath        = config.build.assetsPublicPath
   minify = {
     removeComments: true,
     collapseWhitespace: true,
@@ -25,14 +47,61 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 if (process.env.NODE_ENV === 'staging') {
-  assetsPublicPath = config.stg.assetsPublicPath
+  assetsRoot              = config.stg.assetsRoot
+  staticSourceDest        = config.stg.assetsSubDirectory
+  assetsSubDirectory      = config.stg.assetsSubDirectory
+  staticSourceDirectory   = config.stg.staticSourceDirectory
+  assetsPublicPath        = config.stg.assetsPublicPath
+}
+
+if (project) {
+  staticSourceDest = staticSourceDirectory
+  cssPath          = utils.assetsPath(project + '/css/[name].[contenthash].css')
+  filename         = utils.assetsPath(project + '/js/[name].[chunkhash].js')
+  chunkFilename    = utils.assetsPath(project + '/js/[id].[chunkhash].js')
+  imgPath          = utils.assetsPath(project + '/img/[name].[hash:7].[ext]')
+  fontsPath        = utils.assetsPath(project + '/fonts/[name].[hash:7].[ext]')
+
+  // filter project pages
+  // handle one project with mutiple pages
+  for (let key in pages) {
+    let arr = key.split('/')
+
+    if (arr[1] === project) {
+      projectPages[key] = pages[key]
+    }
+  }
+
+  // filter project js
+  // handle one project with mutiple js
+  for (let key in entries) {
+    let arr = key.split('/')
+
+    // entry[arr[1] + '/' + arr[2]] = entries[key]
+
+    if (arr[1] === project) {
+      entry[arr[2]] = entries[key]
+    }
+
+    // ff[arr[1]]
+  }
+
+  tempPages = projectPages
+  tempEntry = entry
+}
+
+if (process.env.NODE_ENV === 'development') {
+  filename = '[name].js'
+  tempPages = pages
+  tempEntry = entries
 }
 
 module.exports = {
-  entry: entries,
+  entry: tempEntry,
   output: {
-    path: config.build.assetsRoot,
-    filename: '[name].js',
+    path: assetsRoot,
+    filename: filename,
+    // filename: '[name].[chunkhash].js',
     publicPath: assetsPublicPath
   },
   resolve: {
@@ -68,7 +137,8 @@ module.exports = {
         loader: 'url-loader',
         query: {
           limit: 10000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]')
+          // name: utils.assetsPath('img/[name].[hash:7].[ext]')
+          name: imgPath
         }
       },
       {
@@ -76,19 +146,23 @@ module.exports = {
         loader: 'url-loader',
         query: {
           limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+          // name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+          name: fontsPath
         }
       }
     ]
   },
-  plugins: []
+  plugins: [
+    // new WebpackEntriesPlugin()
+  ]
 }
 
 // generate dist index.html with correct asset hash for caching.
 // you can customize output by editing /index.html
 // see https://github.com/ampedandwired/html-webpack-plugin
-for (let pathname in pages) {
-  let filename = pathname.split('/')[1]
+for (let pathname in tempPages) {
+  let filename = pathname.split('/')[2]  // inject correct css/js
+
   let config = {
     // refer to `../config/index.js` line 11 -- output dir #1
     filename: pathname + '.html',
@@ -96,7 +170,8 @@ for (let pathname in pages) {
     // refer to `../config/index.js` line 23 -- output dir #2
     // let filename = pathname.split('/')[1]
     // filename: pathname + '/' + filename + '.html',
-    template: pages[pathname],
+
+    template: tempPages[pathname],
 
     inject: true,
     chunks: [filename, 'vendor', 'manifest'],

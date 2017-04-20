@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Info from '../../components/info'
 // import bow from 'bow'
 
-// require('../../assets/scss/test.scss')
+// require('../../assets/sass/app.sass')
 
 // import api from '../../apis'
 // console.log(api)

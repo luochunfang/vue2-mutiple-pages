@@ -1,1 +1,13 @@
-{"data":{"sevenYield":3.6747,"productUnitIncome":0.993,"taCode":"YL","time":1489482582468},"responseCode":"000000","responseMsg":"成功"}
+{
+  "data": {
+    "sevenYield": 3.6747,
+    "productUnitIncome": 0.993,
+    "taCode": "YL",
+    "time": 1489482582468,
+    "test": {
+      "a": "aaa"
+    }
+  },
+  "responseCode": "000001",
+  "responseMsg": "成功"
+}

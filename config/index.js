@@ -6,7 +6,8 @@ module.exports = {
     env: require('./prod.env'),
     // index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist/prod'),
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: 'views',
+    staticSourceDirectory: 'static',
     /**
      * output dir #1: (good for directory management)
      *     dist/
@@ -30,7 +31,7 @@ module.exports = {
      *           --others.html
      * change `assetsPublicPath` setting to `/`
      */
-    assetsPublicPath: '/',
+    assetsPublicPath: '../../',
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
@@ -46,10 +47,12 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port: 8000,
     autoOpenBrowser: true,
+    assetsRoot: path.resolve(__dirname, '../dist/prod'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+    staticSourceDirectory: 'static',
     proxyTable: {
       '/api': {
         target: 'http://127.0.0.1:3000',
@@ -57,6 +60,10 @@ module.exports = {
         pathRewrite: {
           '^/api': ''
         }
+      },
+      '/portal': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
@@ -70,7 +77,8 @@ module.exports = {
     env: require('./stg.env'),
     // index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist/stg'),
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: 'views',
+    staticSourceDirectory: 'static',
     assetsPublicPath: '/',
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as

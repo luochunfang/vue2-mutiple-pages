@@ -6,8 +6,13 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
-    "build:stg": "node build/build.js staging",
-    "build:prod": "node build/build.js",
+    "stg": "node build/build.js staging",
+    "prod": "node build/build.js production",
+    "prod:info": "node build/build.js production info",
+    "stg:info": "node build/build.js staging info",
+    "prod:index": "node build/build.js production index",
+    "stg:index": "node build/build.js staging index",
+    "prod:all": "npm run prod:index && npm run prod:info",
     "mock": "nodemon build/mock-server.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
@@ -17,10 +22,14 @@
   "dependencies": {
     "axios": "^0.15.3",
     "es6-promise": "^4.1.0",
+    "jquery": "^3.2.1",
     "lodash": "^4.17.4",
     "mint-ui": "^2.2.1",
     "vue": "^2.2.2",
-    "vue-router": "^2.2.0"
+    "vue-router": "^2.2.0",
+    "weui": "^1.1.1",
+    "weui.js": "^1.1.1",
+    "zepto": "^1.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
@@ -68,6 +77,8 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "^2.0.2",
+    "less": "^2.7.2",
+    "less-loader": "^3.0.0",
     "lolex": "^1.5.2",
     "mocha": "^3.2.0",
     "nightwatch": "^0.9.12",
