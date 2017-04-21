@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import API from '../api'
+import API from '../../../api'
 
 export default {
   name: 'info',
@@ -30,7 +30,7 @@ export default {
 h1, h2 {
   font-weight: normal;
   color: red;
-  background: url(../assets/images/test.png);
+  /*background: url(../assets/images/test.png);*/
 }
 
 ul {

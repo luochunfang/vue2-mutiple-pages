@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Info from '../../components/info'
+import Info from './components/info'
 // import bow from 'bow'
 
 // require('../../assets/sass/app.sass')

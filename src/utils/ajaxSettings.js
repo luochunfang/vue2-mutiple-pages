@@ -4,7 +4,7 @@
 * @Github: https://github.com/dlidala
 * @Date:   2017-04-17 17:07:25
 * @Last Modified by:   dlidala
-* @Last Modified time: 2017-04-20 15:53:02
+* @Last Modified time: 2017-04-20 16:53:17
 */
 
 'use strict'
@@ -28,6 +28,7 @@ export default () => {
 
   ajaxSettings.beforeSend = function (xhr, settings) {
     Loading = loading('loading')
+    console.log(settings)
   }
 
   ajaxSettings.dataFilter = (data, dataType) => {

@@ -3,7 +3,7 @@
 * @Github: https://github.com/dlidala
 * @Date:   2017-04-18 14:08:18
 * @Last Modified by:   dlidala
-* @Last Modified time: 2017-04-20 15:42:37
+* @Last Modified time: 2017-04-21 09:51:23
 */
 
 'use strict'
@@ -13,7 +13,10 @@ import posts from './api/posts'
 import bow from 'bow'
 window.bow = bow
 
-import { encryptPayPassword, encryptLoginPassword } from '../../services/encrypt'
+import { utils } from 'utils/utils'
+console.log(utils)
+
+import { encryptPayPassword, encryptLoginPassword } from 'services/encrypt'
 new Vue({
   data () {
     return {
@@ -25,11 +28,8 @@ new Vue({
     loadData () {
       posts.getArticle().then(res => {
         // 000001
-        console.log('---------')
         console.log(res)
-        console.log('---------')
       }).catch((err) => {
-        console.log('---------1')
         console.log(err)
       })
 

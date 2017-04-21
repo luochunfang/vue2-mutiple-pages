@@ -3,7 +3,7 @@
 * @Github: https://github.com/dlidala
 * @Date:   2017-03-16 16:28:47
 * @Last Modified by:   dlidala
-* @Last Modified time: 2017-04-18 17:09:42
+* @Last Modified time: 2017-04-21 09:09:37
 */
 
 // define env base constants
@@ -19,22 +19,22 @@ var toaLoginPublicKey = 'BDAD3EB2F9681EAF6FBE41A073531AE4619DB772AB44451C2D46140
 
 // in development mode fetching staging mode data
 var arr = location.search.match(new RegExp('\\benv=([^&=]+)')) || []
-var isFetchStgData = false
-var isFetchProdData = false
+var fetchStgData = false
+var fetchProdData = false
 
 if (arr[1] === 'stg') {
-  isFetchStgData = true
+  fetchStgData = true
 }
 
 if (arr[1] === 'prod') {
-  isFetchProdData = true
+  fetchProdData = true
 }
 
-if (env === 'staging' || isFetchStgData) {
+if (env === 'staging' || fetchStgData) {
   url = 'https://rsb-stg.pingan.com.cn/brop/noe/cust/mopsf'
 }
 
-if (env === 'production' || isFetchProdData) {
+if (env === 'production' || fetchProdData) {
   url = 'https://rsb.pingan.com.cn/brop/noe/cust/mopsf'
   payPublicKey = 'BB955F6C6185B341C1A42EBF1FF9971B273878DBDAB252A0F1C305EBB529E116D807E0108BE6EDD47FF8DC5B6720FFE7F413CBB4ACDFB4C6BE609A5D60F5ADB261690A77755E058D4D9C0EC4FC2F5EB623DEBC88896003FBD8AFC4C3990828C66062A6D6CE509A2B0F8E06C4E332673FB86D235164B62B6110C1F1E0625B20ED'
   toaLoginPublicKey = 'B3C427C6930DCC156ECF69145B1401255127195C457980CA00E2952F45AC9406E1B41D8BBE5069ECDF55A3E527B2B9A02F5B1026C238E6EF9BD1D29296F36C1AB91B7F3344BB3404C77C3C2BB9B964857071FA3EC47AF9C3FF3857177DC77A3EEDCD295E5B58EF1959C48C844D28723C4B537F30E039B5AC5D59EEC463D05A15'

@@ -4,8 +4,9 @@ require('./ajaxSettings')()
 
 import { Deferred, ajax } from 'jquery'
 import handleExceptions from './handleExceptions'
+import { baseURL } from './constant'
 
-export default (url, options = {}) => {
+const fetch = (url, options = {}) => {
 
   // if not provide url
   if (!url) {
@@ -15,6 +16,9 @@ export default (url, options = {}) => {
 
     return
   }
+
+  // concat domain
+  url = baseURL + url
 
   let deferred = new Deferred()
   let obj = {
@@ -37,6 +41,7 @@ export default (url, options = {}) => {
         // console.log(err)
       }
 
+      // business logic fail(not really)
       if (data.resCode !== '000000') {
         deferred.reject(data)
         return
@@ -50,3 +55,7 @@ export default (url, options = {}) => {
 
   return deferred.promise()
 }
+
+export default fetch
+
+window.fetch = fetch
