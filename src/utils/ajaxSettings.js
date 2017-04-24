@@ -12,6 +12,7 @@
 import { ajax, ajaxSettings } from 'jquery'
 import { loading } from 'weui.js'
 import { extend as _extend } from 'lodash'
+import needTokenLists from './needTokenLists'
 
 export default () => {
   let Loading
@@ -28,7 +29,6 @@ export default () => {
 
   ajaxSettings.beforeSend = function (xhr, settings) {
     Loading = loading('loading')
-    console.log(settings)
   }
 
   ajaxSettings.dataFilter = (data, dataType) => {
@@ -49,7 +49,7 @@ export default () => {
       parsedData.resMsg = data.responseMsg
     }
 
-    return JSON.stringify(_extend(parsedData, data.data ? data.data : {}))
+    return JSON.stringify(_extend(parsedData, data.data ? data.data : data))
   }
 
   // if you use error in $.ajax() this function will not be trigger

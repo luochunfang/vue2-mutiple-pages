@@ -11,7 +11,7 @@
 const account = {
   queryNextWorkDay: '/product/endownment/queryNextWorkDay',
   queryEndowmentSituation: '/portal/product/endownment/queryEndowmentSituation',
-  defineRepeatSubmit: '/portal/product/endownment/defineRepeatSubmit'
+  accessToken: '/portal/product/endownment/defineRepeatSubmit'
 }
 
 const products = {}

@@ -10,8 +10,8 @@
 
 import Vue from 'vue'
 import posts from './api/posts'
-import bow from 'bow'
-window.bow = bow
+// import bow from 'bow'
+// window.bow = bow
 
 import { utils } from 'utils/utils'
 console.log(utils)
