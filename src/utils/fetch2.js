@@ -3,82 +3,77 @@
 * @Github: https://github.com/dlidala
 * @Date:   2017-04-24 10:20:08
 * @Last Modified by:   dlidala
-* @Last Modified time: 2017-04-24 17:31:08
+* @Last Modified time: 2017-04-25 10:19:29
 */
 
 'use strict'
 
-/* eslint-disable */
-
 require('./ajaxSettings')()
 
-import { ajax, when } from 'jquery'
+import { ajax } from 'jquery'
 import { baseURL } from './constant'
 import handleExceptions from './handleExceptions'
 import needTokenLists from './needTokenLists'
+import { accessToken } from 'utils/urls'
 
 const fetch = (url, options = {}) => {
-  var count = 1
+  return new Promise(function (resolve, reject) {
+    let requireAccessToken = needTokenLists.indexOf(url) > -1 !== false
 
-  // if not provide url
-  if (!url) {
-    throw new Error('URL Not Found!')
-    return
-  }
+    // if not provide url
+    if (!url) {
+      throw new Error(`
 
-  // concat domain
-  url = baseURL + url
+        Asshole!!! URL Not Found!
+      `)
+    }
 
-  var token = false
-  // try fetch access token
-  if ( needTokenLists.indexOf( url ) > -1) {
-    token = true
-  }
+    // concat domain
+    url = baseURL + url
 
-  return new Promise( function ( resolve, reject ) {
     let obj = ({
       url: url || '',
       type: options.type || 'POST',
       data: options.data || {},
       dataType: options.dataType || 'json',
-      error: ( xhr, statusText, errorThrown ) => {
+      error: (xhr, statusText, errorThrown) => {
         console.error(`
-          Request: ${ statusText } ==> Error Type: ${ errorThrown }
+          Request: ${statusText} ==> Error Type: ${errorThrown}
         `)
 
         reject(xhr)
       },
-      success: ( data, textStatus, xhr ) => {
+      success: (data, textStatus, xhr) => {
         // try to handle exceptions
         try {
-          handleExceptions( data.resCode )
-        } catch ( err ) {
-          // console.log(err)
+          handleExceptions(data.resCode)
+        } catch (err) {
+          throw err
         }
 
         // business logic fail(not really)
-        if ( data.resCode !== '000000' ) {
+        if (data.resCode !== '000000') {
           reject(data)
+
           return
         }
 
-        resolve( data )
+        resolve(data)
       }
     })
 
-    if (needTokenLists.indexOf(url) > -1) {
-      debugger
-      let dd = ajax('/portal/product/endownment/defineRepeatSubmit')
-      console.log(dd)
-      when(ajax('/portal/product/endownment/defineRepeatSubmit')).done(function(res) {
-        debugger
-        console.log(obj.url)
+    // inject access token
+    if (requireAccessToken) {
+      fetch(accessToken).then(res => {
+        obj.data.token = res.tokenValue
+
         ajax(url, obj)
       })
     } else {
-      ajax( url, obj )
+      ajax(url, obj)
     }
   })
 }
 
 export default fetch
+window.fetch = fetch

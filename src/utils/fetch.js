@@ -1,50 +1,47 @@
-/* eslint-disable */
+/*
+* @Author: dlidala
+* @Github: https://github.com/dlidala
+* @Date:   2017-04-25 10:30:59
+* @Last Modified by:   dlidala
+* @Last Modified time: 2017-04-25 10:34:11
+*/
+
+'use strict'
 
 require('./ajaxSettings')()
 
-import { Deferred, ajax, when } from 'jquery'
+import { Deferred, ajax } from 'jquery'
 import handleExceptions from './handleExceptions'
-import { baseURL } from './constant'
 import needTokenLists from './needTokenLists'
-import { fetchToken } from './requestToken'
-console.log(needTokenLists)
+import { baseURL } from './constant'
+import { accessToken } from 'utils/urls'
 
 const fetch = (url, options = {}) => {
-  debugger
+  let deferred = new Deferred()
+  let requireAccessToken = needTokenLists.indexOf(url) > -1 !== false
 
   // if not provide url
   if (!url) {
-    console.error(
-      `URL Not Found!`
-    )
+    throw new Error(`
 
-    return
+      Asshole!!! URL Not Found!
+    `)
   }
-
-  // inject token
-  // if ( needTokenLists.indexOf( url ) > -1 ) {
-  //   when( fetchToken() ).then( (res) => {
-  //     ajax(url, obj)
-  //   })
-  // } else {
-  //   ajax(url, obj)
-  // }
 
   // concat domain
   url = baseURL + url
 
-  let deferred = new Deferred()
-  var obj = {
+  let obj = {
     url: url || '',
     type: options.type || 'POST',
     data: options.data || {},
     dataType: options.dataType || 'json',
     error: (xhr, statusText, errorThrown) => {
-      deferred.reject(xhr)
-
       console.error(`
         Request: ${statusText} ==> Error Type: ${errorThrown}
       `)
+
+      deferred.reject(xhr)
     },
     success: (data, textStatus, xhr) => {
       // try to handle exceptions
@@ -60,10 +57,18 @@ const fetch = (url, options = {}) => {
         return
       }
 
-      ajax(url, obj)
-
       deferred.resolve(data)
     }
+  }
+
+  // inject access token
+  if (requireAccessToken) {
+    fetch(accessToken).then(res => {
+      obj.data.token = res.tokenValue
+      ajax(url, obj)
+    })
+  } else {
+    ajax(url, obj)
   }
 
   return deferred.promise()

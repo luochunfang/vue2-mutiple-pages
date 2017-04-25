@@ -115,7 +115,8 @@ module.exports = {
       'router': path.resolve(__dirname, '../src/router'),
       'store': path.resolve(__dirname, '../src/store'),
       'api': path.resolve(__dirname, '../src/api'),
-      'filter': path.resolve(__dirname, '../src/filter')
+      'filter': path.resolve(__dirname, '../src/filter'),
+      'components': path.resolve(__dirname, '../src/components')
     }
   },
   module: {
@@ -156,6 +157,15 @@ module.exports = {
           // name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
           name: fontsPath
         }
+      },
+      {
+        test: /\.html$/,
+        use: [{
+          loader: 'html-loader',
+          options: {
+            minimize: true
+          }
+        }]
       }
     ]
   },

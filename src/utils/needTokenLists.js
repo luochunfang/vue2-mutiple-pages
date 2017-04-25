@@ -3,12 +3,12 @@
 * @Github: https://github.com/dlidala
 * @Date:   2017-04-21 15:23:57
 * @Last Modified by:   dlidala
-* @Last Modified time: 2017-04-24 16:33:49
+* @Last Modified time: 2017-04-25 09:12:22
 */
 
 'use strict'
 
 export default [
   'showTakeToken',
-  '/api/portal/product/endownment/queryEndowmentSituation'
+  '/portal/product/endownment/queryEndowmentSituation'
 ]
