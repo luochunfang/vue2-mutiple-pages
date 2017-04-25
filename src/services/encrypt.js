@@ -3,15 +3,15 @@
 * @Github: https://github.com/dlidala
 * @Date:   2017-04-18 15:39:31
 * @Last Modified by:   dlidala
-* @Last Modified time: 2017-04-19 11:09:25
+* @Last Modified time: 2017-04-24 15:30:04
 */
 
 'use strict'
 
 import { payKey, loginKey } from '../utils/constant'
 import RSA from '../utils/rsa'
-import bow from 'aladdin-ibank/dist/aladdin.ibank.web.min'
-window.bow = bow
+// import bow from 'aladdin-ibank/dist/aladdin.ibank.web.min'
+// window.bow = bow
 
 // import bow from 'bow/dist/bow.min'
 // import aladdin from 'aladdin/aladdin.web.min'

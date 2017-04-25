@@ -2,11 +2,15 @@
 
 require('./ajaxSettings')()
 
-import { Deferred, ajax } from 'jquery'
+import { Deferred, ajax, when } from 'jquery'
 import handleExceptions from './handleExceptions'
 import { baseURL } from './constant'
+import needTokenLists from './needTokenLists'
+import { fetchToken } from './requestToken'
+console.log(needTokenLists)
 
 const fetch = (url, options = {}) => {
+  debugger
 
   // if not provide url
   if (!url) {
@@ -17,11 +21,20 @@ const fetch = (url, options = {}) => {
     return
   }
 
+  // inject token
+  // if ( needTokenLists.indexOf( url ) > -1 ) {
+  //   when( fetchToken() ).then( (res) => {
+  //     ajax(url, obj)
+  //   })
+  // } else {
+  //   ajax(url, obj)
+  // }
+
   // concat domain
   url = baseURL + url
 
   let deferred = new Deferred()
-  let obj = {
+  var obj = {
     url: url || '',
     type: options.type || 'POST',
     data: options.data || {},
@@ -47,11 +60,11 @@ const fetch = (url, options = {}) => {
         return
       }
 
+      ajax(url, obj)
+
       deferred.resolve(data)
     }
   }
-
-  ajax(url, obj)
 
   return deferred.promise()
 }
