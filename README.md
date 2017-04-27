@@ -2,73 +2,84 @@
 
 > 改造 `VUE-CLI` 构建流程（构建多页应用）
 
-## Build Setup
+### Build Setup
+```
+step1:
+  git clone https://github.com/dlidala/vue2-mutiple-pages.git
 
-``` bash
-# install dependencies
-npm install
+setp2:
+  cd path/vue2-mutiple-pages && sudo npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# 开发调用 Mock Data
-npm run mock
-
-# 构建测试包(no minification)
-npm run build:stg
-
-# 构建生产包(minification)
-npm run build:prod
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-**test 还未使用**
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+step3:
+  npm run dev
+  npm run mock
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### 构建测试/生产包
+```bash
 
+  // 构建测试包
+  // npm run stg:项目文件夹
+  npm run stg:index
 
-```
-static/
-assets/
-  js/
-  css/
-  img/
-  fonts/
-views/
-  index/
-  info/
-
-
-npm run build:prod:project
-static
-views/
-  index/
-    js/
-    css/
-    fonts/
-    imgs/
-    **.html
-
-  info/
-    js/
-    css/
-    fonts/
-    img/
-    **.html
+  // 构建生产包
+  // npm run prod:项目文件夹
+  npm run prod:index
 ```
 
+### Directory Structure
 ```
-  zepto
-  bow
-  axios
+vue2-multiple-pages/
+  - build/            --> build process
+  - config/           --> build process configs
+  - data/             --> mock data
+  - dist/
+      - stg/
+        - static/
+        - views/
+          - index
+          ...
+      - prod/
+  - node_modules/
+  - src/              --> source
+      - api/          --> public apis
+      - assets/       --> public assets
+          - css/
+          - images/
+          - fonts/
+      - components/   --> public components
+      - filter/       --> filter
+      - router/       --> 项目中很少情况会未启用
+      - store/        --> 项目中很少情况会未启用
+      - services/     --> public services (例如:`调登录组件`)
+      - utils/        --> utils (fetch.js、ajax.js、util.js、etc.)
+      - views/
+        - index       --> project folder
+            - api/          --> project api
+            - assets/       --> project assets
+              - css/
+              - images/
+              - fonts/
+            - components/   --> project components
+            - router/       --> project router (多页里面做单页)
+            index.html
+            index.js
+            demo.html
+            demo.js
+        - info
+          - ...
+  - static/                 --> libs (ex: bootstrap)
+  - test/                   --> 未完善
+  .babelrc
+  .editorconfig
+  .eslintignore
+  .eslintrc.js
+  .gitignore
+  .postcssrc.js
+  .package.json
+  README.md
+
+  ** `public` 指的是三以上项目都用到的 **
 ```
+
+**就目前的项目来看，并不建议使用 `vuex`**
